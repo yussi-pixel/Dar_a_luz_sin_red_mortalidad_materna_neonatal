@@ -5,9 +5,19 @@ Seminario de la asignatura **Fuentes de Datos Biomédicos y Web Semántica**
 
 **Autora:** Yousra El Jarjini
 
-## ¿De qué trata?
+## Acerca de este proyecto
 
-Analizamos, a escala de país, cómo se relacionan las muertes de madres y de recién nacidos con la fecundidad, la pobreza, la atención sanitaria en el parto y la contaminación del aire. Usamos datos públicos del Banco Mundial (*World Development Indicators*) y trabajamos con R y RMarkdown.
+Este trabajo estudia, a escala mundial, por qué en unos países las mujeres embarazadas y los recién nacidos mueren con mucha más frecuencia que en otros. Comparamos los países del mundo con datos disponibles usando datos públicos del Banco Mundial (*World Development Indicators*), y relacionamos las muertes maternas y neonatales con cuatro factores: la **fecundidad**, la **pobreza**, la **atención sanitaria en el parto** y la **contaminación del aire**.
+
+Todo el análisis está hecho en **R y RMarkdown**: se importan los datos desde archivos CSV, se limpian y se unen con *joins*, se guardan también en formato JSON, y se representan con mapas, gráficos, correlaciones de Spearman y un modelo de regresión lineal. El documento final se genera en HTML y contiene el texto, el código y sus resultados.
+
+El seminario completo está en el archivo `.html` de este repositorio: descárgalo y ábrelo en el navegador para verlo bien.
+
+## Introducción
+
+Cada año mueren muchas mujeres por causas relacionadas con el embarazo y el parto, y muchos recién nacidos mueren durante su primer mes de vida. La mayoría de estas muertes se deben a causas conocidas y evitables: hemorragias, infecciones y problemas de tensión arterial en las madres; y prematuridad, falta de oxígeno al nacer e infecciones en los bebés. Casi siempre se pueden evitar con personal cualificado, medicamentos y un centro de salud al que llegar a tiempo.
+
+Sin embargo, el lugar donde nace una persona sigue marcando enormemente sus probabilidades de sobrevivir. Con este trabajo queremos ver, con datos, cómo se reparten estas muertes en el mundo, cómo han cambiado desde el año 2000, y qué factores aparecen asociados a ellas. También analizamos el caso de Estados Unidos, un país rico con la mortalidad materna más alta entre los países de ingresos altos, para comprobar que la riqueza media de un país no basta para garantizar un parto seguro.
 
 ## Objetivos
 
@@ -15,19 +25,6 @@ Analizamos, a escala de país, cómo se relacionan las muertes de madres y de re
 2. **Descripción temporal:** evolución entre 2000 y 2023 según el nivel de ingreso del país.
 3. **Fecundidad:** relación entre la fecundidad y la mortalidad materna y neonatal.
 4. **Pobreza, atención sanitaria y ambiente:** relación de la mortalidad con la pobreza, los partos atendidos por personal cualificado y la contaminación del aire.
-
-## Contenido del repositorio
-
-```
-.
-├── README.md                     Esta página
-├── Dar_a_luz_sin_red_mortalidad_materna_neonatal.Rmd      Cuaderno de R: texto y código del seminario
-├── Dar_a_luz_sin_red_mortalidad_materna_neonatal.html     Seminario renderizado (descargar y abrir en el navegador)
-├── Data/                         Archivos CSV descargados del Banco Mundial
-└── OUTPUT/                       Tablas generadas por el código (CSV y JSON)
-```
-
-> GitHub no muestra los archivos `.html` como página web. Para verlo bien, hay que **descargar** `Dar_a_luz_sin_red_mortalidad_materna_neonatal.html` y abrirlo en el navegador.
 
 ## Datos
 
@@ -46,13 +43,6 @@ Los indicadores proceden del Banco Mundial (https://data.worldbank.org/). Cada a
 | EG.CFT.ACCS.ZS | Acceso a combustibles limpios para cocinar |
 
 El archivo `Metadata_Country...csv` contiene el nombre, la región y el grupo de ingreso de cada país.
-
-## Cómo reproducir el análisis
-
-1. Descargar el repositorio completo (**Code → Download ZIP**) y descomprimirlo.
-2. Abrir `Dar_a_luz_sin_red_mortalidad_materna_neonatal.Rmd` en RStudio.
-3. Instalar, si hace falta, los paquetes: `tidyverse`, `sf`, `giscoR`, `scales`, `knitr`, `broom` y `jsonlite`.
-4. Pulsar **Knit**. La carpeta `Data` debe estar junto al archivo `.Rmd`.
 
 ## Fuentes principales
 
