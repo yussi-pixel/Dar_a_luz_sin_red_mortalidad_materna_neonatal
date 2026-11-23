@@ -1,5 +1,7 @@
 # Dar a luz sin red: mortalidad materna y neonatal, natalidad y pobreza en el mundo
 
+![Dar a luz sin red](images/portada.png)
+
 Seminario de la asignatura **Fuentes de Datos Biomédicos y Web Semántica**
 (Grado en Ingeniería de la Salud, Universidad de Burgos, curso 2026-2027).
 
@@ -25,6 +27,39 @@ Sin embargo, el lugar donde nace una persona sigue marcando enormemente sus prob
 2. **Descripción temporal:** evolución entre 2000 y 2023 según el nivel de ingreso del país.
 3. **Fecundidad:** relación entre la fecundidad y la mortalidad materna y neonatal.
 4. **Pobreza, atención sanitaria y ambiente:** relación de la mortalidad con la pobreza, los partos atendidos por personal cualificado y la contaminación del aire.
+
+## Algunos resultados
+
+**1. Dónde se concentran las muertes.** Los diez países con mayor mortalidad materna son de ingreso bajo o medio-bajo, y nueve de ellos están en África. Encabezan la lista Nigeria (993 muertes por 100.000 nacidos vivos) y Chad (748). La mediana de los países de ingreso bajo es de 354 muertes maternas por 100.000 nacidos vivos, frente a 8 en los de ingreso alto (unas 44 veces más). En mortalidad neonatal, la diferencia es de 24,2 frente a 2,6 por 1.000 nacidos vivos (unas 9 veces más).
+
+**2. Ha mejorado, pero las diferencias se mantienen.** Entre 2000 y 2023 todos los grupos de ingreso reducen su mortalidad (mediana por grupo):
+
+| Grupo de ingreso | Muertes maternas 2000 → 2023 (por 100.000) | Muertes neonatales 2000 → 2023 (por 1.000) |
+|---|---|---|
+| Ingreso bajo | 786 → 354 (−55 %) | 42,9 → 24,2 (−44 %) |
+| Ingreso medio-bajo | 378 → 146 (−61 %) | 31,0 → 18,7 (−40 %) |
+| Ingreso medio-alto | 68,5 → 43,0 (−37 %) | 15,4 → 7,6 (−51 %) |
+| Ingreso alto | 12,5 → 8,0 (−36 %) | 4,6 → 2,6 (−44 %) |
+
+**3. Fecundidad y mortalidad van de la mano.** La correlación de Spearman de la fecundidad con la mortalidad materna es ρ = 0,80, y con la neonatal ρ = 0,79. Es una asociación, no una prueba de causa.
+
+**4. Pobreza, atención sanitaria y ambiente.**
+
+| Relación | Correlación de Spearman (ρ) |
+|---|---|
+| PIB per cápita y mortalidad neonatal | −0,84 |
+| Partos atendidos por personal cualificado y mortalidad materna | −0,74 |
+| Pobreza extrema y mortalidad neonatal | 0,78 |
+| Combustibles limpios para cocinar y mortalidad materna | −0,80 |
+| Combustibles limpios para cocinar y mortalidad neonatal | −0,75 |
+| Contaminación PM2.5 y mortalidad neonatal | 0,46 |
+| Contaminación PM2.5 y mortalidad materna | 0,37 |
+
+En el modelo de regresión conjunto, duplicar el PIB per cápita se asocia con multiplicar la mortalidad neonatal por 0,7, y duplicar el PM2.5 con multiplicarla por 1,13, manteniendo iguales las demás variables.
+
+## Conclusión
+
+La geografía de la muerte materna y neonatal coincide con la de la pobreza, y las diferencias entre países ricos y pobres siguen siendo enormes aunque todos hayan mejorado. Lo que más pesa es la pobreza y la atención en el parto, y el ambiente también se asocia, pero va muy ligado a la pobreza. El caso de Estados Unidos muestra que ser un país rico no garantiza un parto seguro: importa menos la riqueza media que el apoyo y la atención que recibe cada mujer. Los resultados son **asociaciones entre países, no causas**, y apuntan a soluciones centradas en mejorar la atención sanitaria y garantizar el acceso voluntario a la planificación familiar.
 
 ## Datos
 
