@@ -1,0 +1,218 @@
+iso3c,pais,region,income,grupo_ingreso,rmm,tmn,tm5,fecundidad,partos_cual,pib_pc_ppa,pobreza_ext
+AFG,Afghanistan,"Middle East, North Africa, Afghanistan & Pakistan",Low income,Ingreso bajo,521,33.9,54.9,4.84,61.8,2203.53761869487,NA
+ALB,Albania,Europe & Central Asia,Upper middle income,Ingreso medio-alto,7,6.9,9.4,1.348,99.8,24847.5057998051,0.3
+DZA,Algeria,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income,Ingreso medio-alto,62,15.3,22,2.766,98.8,16838.3550419037,0
+ASM,American Samoa,East Asia & Pacific,High income,Ingreso alto,NA,NA,NA,2.286,NA,NA,NA
+AND,Andorra,Europe & Central Asia,High income,Ingreso alto,11,1.3,2.6,1.082,100,71789.7907855414,NA
+AGO,Angola,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,183,18.4,50.5,5.124,49.6,9549.79313920752,39.3
+ATG,Antigua and Barbuda,Latin America & Caribbean,High income,Ingreso alto,35,5.4,9.3,1.578,99,31892.5519402733,NA
+ARG,Argentina,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,33,5.4,9.7,1.5,98.8,30246.4069577192,1.2
+ARM,Armenia,Europe & Central Asia,Upper middle income,Ingreso medio-alto,19,5.3,10,1.9,99.8,21551.7793903081,1.9
+ABW,Aruba,Latin America & Caribbean,High income,Ingreso alto,NA,NA,NA,1.602,NA,47521.8765471843,NA
+AUS,Australia,East Asia & Pacific,High income,Ingreso alto,2,2.3,3.7,1.499,96,72272.7092136683,0.9
+AUT,Austria,Europe & Central Asia,High income,Ingreso alto,6,2.2,3.3,1.32,98.1,74261.1961105071,0.5
+AZE,Azerbaijan,Europe & Central Asia,Upper middle income,Ingreso medio-alto,18,12.9,18.7,1.55,99.9,23671.0936895744,NA
+BHS,"Bahamas, The",Latin America & Caribbean,High income,Ingreso alto,76,9.2,12.7,1.373,99,39122.340470849,NA
+BHR,Bahrain,"Middle East, North Africa, Afghanistan & Pakistan",High income,Ingreso alto,17,4.4,8.6,1.824,99.6,64223.977053306,NA
+BGD,Bangladesh,South Asia,Lower middle income,Ingreso medio-bajo,115,18,30.6,2.163,59,9155.31731992295,5.9
+BRB,Barbados,Latin America & Caribbean,High income,Ingreso alto,35,6.8,10.1,1.708,98.4,23176.0027148492,1.7
+BLR,Belarus,Europe & Central Asia,Upper middle income,Ingreso medio-alto,1,0.8,2.4,1.208,99.9,30859.5916206484,0
+BEL,Belgium,Europe & Central Asia,High income,Ingreso alto,4,2.2,3.7,1.47,NA,72629.6179311762,0.1
+BLZ,Belize,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,67,9.3,12.8,2.007,94.6,13741.2085585188,1
+BEN,Benin,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,518,27.7,77.2,4.556,78.1,4133.3701351778,27.2
+BMU,Bermuda,North America,High income,Ingreso alto,NA,NA,NA,1.401,99.4,113596.12110365,NA
+BTN,Bhutan,South Asia,Lower middle income,Ingreso medio-bajo,47,7.7,18,1.462,98.9,16228.5169143762,0
+BOL,Bolivia,Latin America & Caribbean,Lower middle income,Ingreso medio-bajo,146,7.7,16.4,2.547,81.1,12902.7509503368,2.8
+BIH,Bosnia and Herzegovina,Europe & Central Asia,Upper middle income,Ingreso medio-alto,6,4.5,6,1.486,99.9,23376.3069324282,0.3
+BWA,Botswana,Sub-Saharan Africa,Upper middle income,Ingreso medio-alto,155,18.1,34.6,2.732,99.8,21029.4218686605,21.4
+BRA,Brazil,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,67,7.6,14.4,1.619,98.4,21193.0721417478,3.8
+VGB,British Virgin Islands,Latin America & Caribbean,High income,Ingreso alto,NA,6.6,12.7,1.045,NA,NA,NA
+BRN,Brunei Darussalam,East Asia & Pacific,High income,Ingreso alto,36,5.7,10.1,1.747,99.6,85102.6867427911,NA
+BGR,Bulgaria,Europe & Central Asia,High income,Ingreso alto,6,2.7,5.9,1.81,94.5,38829.297423161,1
+BFA,Burkina Faso,Sub-Saharan Africa,Low income,Ingreso bajo,242,24.2,77.4,4.186,79.8,2761.57633646549,42.1
+BDI,Burundi,Sub-Saharan Africa,Low income,Ingreso bajo,392,19.4,48.7,4.878,76.5,1147.42440486734,74.2
+CPV,Cabo Verde,Sub-Saharan Africa,Upper middle income,Ingreso medio-alto,40,8.3,11.6,1.522,97.3,10250.5950245626,14.6
+KHM,Cambodia,East Asia & Pacific,Lower middle income,Ingreso medio-bajo,137,9.9,19.1,2.579,98.7,7436.85544015287,NA
+CMR,Cameroon,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,258,25.2,67,4.322,69,5415.22890256369,26.7
+CAN,Canada,North America,High income,Ingreso alto,12,3.4,5.4,1.27,98,64962.1919440095,0.3
+CYM,Cayman Islands,Latin America & Caribbean,High income,Ingreso alto,NA,NA,NA,1.531,NA,88395.1826392376,NA
+CAF,Central African Republic,Sub-Saharan Africa,Low income,Ingreso bajo,692,30.4,92.6,6.012,40.3,1258.13048389217,71.6
+TCD,Chad,Sub-Saharan Africa,Low income,Ingreso bajo,748,30.9,100.6,6.12,47.2,2703.06889886705,39.5
+CHI,Channel Islands,Europe & Central Asia,High income,Ingreso alto,NA,NA,NA,1.37,NA,NA,NA
+CHL,Chile,Latin America & Caribbean,High income,Ingreso alto,10,4.6,6.9,1.167,99.8,33173.5278418356,0.6
+CHN,China,East Asia & Pacific,Upper middle income,Ingreso medio-alto,16,2.8,6.1,0.999,99.9,25200.068112272,0
+COL,Colombia,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,59,6.5,11.9,1.645,98.8,21281.7475207548,8.6
+COM,Comoros,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,179,22.7,40.2,3.878,82.2,3896.71858176845,8.9
+COD,"Congo, Dem. Rep.",Sub-Saharan Africa,Low income,Ingreso bajo,427,23.9,91.3,6.051,85.2,1732.04870835091,85.3
+COG,"Congo, Rep.",Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,241,16.8,40.3,4.157,91.2,6855.92386613313,39.2
+CRI,Costa Rica,Latin America & Caribbean,High income,Ingreso alto,24,7.1,10.1,1.33,99,29247.8937202355,1.5
+CIV,Cote d'Ivoire,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,359,27.9,66.5,4.283,84,7243.14676270142,20.8
+HRV,Croatia,Europe & Central Asia,High income,Ingreso alto,3,2.8,5.1,1.46,99.9,47759.6272293173,0.3
+CUB,Cuba,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,35,4.2,8.2,1.439,100,NA,NA
+CUW,Curacao,Latin America & Caribbean,High income,Ingreso alto,NA,NA,NA,1.3,NA,30676.8522403072,NA
+CYP,Cyprus,Europe & Central Asia,High income,Ingreso alto,14,2.5,4.6,1.389,99.3,59874.734375,0
+CZE,Czechia,Europe & Central Asia,High income,Ingreso alto,3,1.4,2.6,1.46,99.8,56062.3957561294,0
+DNK,Denmark,Europe & Central Asia,High income,Ingreso alto,4,2.6,3.9,1.5,95.3,77425.3867230346,0.4
+DJI,Djibouti,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,Ingreso medio-bajo,162,27.7,50.5,2.609,87.4,7231.79450192575,25.4
+DMA,Dominica,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,36,30.9,35.4,1.484,100,20302.7023497562,NA
+DOM,Dominican Republic,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,124,21.8,31.5,2.243,99.2,25861.2335511855,1.3
+ECU,Ecuador,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,55,7.1,13,1.823,99.4,15907.3619798807,4.7
+EGY,"Egypt, Arab Rep.","Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,Ingreso medio-bajo,17,14.2,22.9,2.75,97.1,18540.1079077988,1.4
+SLV,El Salvador,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,39,4.5,10.4,1.775,99.9,12667.4662875421,4.6
+GNQ,Equatorial Guinea,Sub-Saharan Africa,Upper middle income,Ingreso medio-alto,174,26.7,70.4,4.081,68.3,16997.002016833,8.8
+ERI,Eritrea,Sub-Saharan Africa,Low income,Ingreso bajo,291,16.2,35.4,3.713,34.1,NA,NA
+EST,Estonia,Europe & Central Asia,High income,Ingreso alto,5,1,2.1,1.31,99.6,48848.1421016254,0.3
+SWZ,Eswatini,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,118,25.5,46.2,2.753,88.3,11309.1967529876,44.5
+ETH,Ethiopia,Sub-Saharan Africa,Low income,Ingreso bajo,195,25.9,51.5,3.989,49.8,3063.42789983124,38.6
+FRO,Faroe Islands,Europe & Central Asia,High income,Ingreso alto,NA,NA,NA,1.8676,NA,79784.0760936327,NA
+FJI,Fiji,East Asia & Pacific,Upper middle income,Ingreso medio-alto,30,15,29.2,2.281,99.8,14656.2474506851,4.7
+FIN,Finland,Europe & Central Asia,High income,Ingreso alto,8,1.4,2.4,1.26,99.5,63466.8356113767,0.2
+FRA,France,Europe & Central Asia,High income,Ingreso alto,7,2.8,4.3,1.66,98.2,60927.0361517867,0.1
+PYF,French Polynesia,East Asia & Pacific,High income,Ingreso alto,NA,NA,NA,1.501,NA,NA,NA
+GAB,Gabon,Sub-Saharan Africa,Upper middle income,Ingreso medio-alto,233,16.9,33.8,3.647,89.3,20772.7726890351,3.8
+GMB,"Gambia, The",Sub-Saharan Africa,Low income,Ingreso bajo,354,23.5,43.8,4.006,83.8,3291.84381275128,22
+GEO,Georgia,Europe & Central Asia,Upper middle income,Ingreso medio-alto,20,5.1,8.8,1.81,99.8,25092.632631604,5.8
+DEU,Germany,Europe & Central Asia,High income,Ingreso alto,4,2.3,3.7,1.39,96.2,72262.2235142279,0.7
+GHA,Ghana,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,234,18.7,37.2,3.397,78.9,7562.64422849208,39
+GIB,Gibraltar,Europe & Central Asia,High income,Ingreso alto,NA,NA,NA,1.888,NA,NA,NA
+GRC,Greece,Europe & Central Asia,High income,Ingreso alto,5,2.2,3.9,1.26,99.9,42613.6574438075,0.6
+GRL,Greenland,Europe & Central Asia,High income,Ingreso alto,NA,NA,NA,1.769,NA,78905.5801137274,NA
+GRD,Grenada,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,48,12.5,18.3,1.487,100,18986.3762946619,0.8
+GUM,Guam,East Asia & Pacific,High income,Ingreso alto,NA,NA,NA,2.781,NA,NA,NA
+GTM,Guatemala,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,94,9.8,21.2,2.311,69.6,13751.6084364487,9.7
+GIN,Guinea,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,494,30.3,95,4.217,55.3,4337.3181486001,11.7
+GNB,Guinea-Bissau,Sub-Saharan Africa,Low income,Ingreso bajo,505,32.7,69.7,3.836,53.8,2955.52345541775,39.9
+GUY,Guyana,Latin America & Caribbean,High income,Ingreso alto,75,15.8,26,2.412,97.6,54774.145474106,NA
+HTI,Haiti,Latin America & Caribbean,Lower middle income,Ingreso medio-bajo,328,23.1,54.4,2.656,41.6,3264.65805430675,40.4
+HND,Honduras,Latin America & Caribbean,Lower middle income,Ingreso medio-bajo,47,8.7,15.5,2.5,94.1,7184.25562362375,17
+HKG,"Hong Kong SAR, China",East Asia & Pacific,High income,Ingreso alto,NA,NA,NA,0.751,NA,71519.1754897022,NA
+HUN,Hungary,Europe & Central Asia,High income,Ingreso alto,12,2.1,3.8,1.55,99.7,46376.1979062264,0.9
+ISL,Iceland,Europe & Central Asia,High income,Ingreso alto,3,1.4,2.9,1.55,97.4,82256.5277425273,0.1
+IND,India,South Asia,Lower middle income,Ingreso medio-bajo,80,17.5,28,1.975,89.4,9853.04309264591,2.6
+IDN,Indonesia,East Asia & Pacific,Upper middle income,Ingreso medio-alto,140,9.5,18.4,2.127,94.7,15428.3856954945,6.7
+IRN,"Iran, Islamic Rep.","Middle East, North Africa, Afghanistan & Pakistan",Upper middle income,Ingreso medio-alto,16,7.5,11.7,1.695,99,18932.6833817658,2.5
+IRQ,Iraq,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income,Ingreso medio-alto,66,12.9,22.5,3.249,95.6,14664.5981923773,0.5
+IRL,Ireland,Europe & Central Asia,High income,Ingreso alto,4,2.5,3.8,1.5,99.7,133440.438499393,0.1
+IMN,Isle of Man,Europe & Central Asia,High income,Ingreso alto,NA,NA,NA,1.548,81.4306770819,NA,NA
+ISR,Israel,"Middle East, North Africa, Afghanistan & Pakistan",High income,Ingreso alto,2,1.7,3.4,2.85,NA,55301.43606891,0.4
+ITA,Italy,Europe & Central Asia,High income,Ingreso alto,6,1.8,2.8,1.21,99.8,60349.664512107,0.9
+JAM,Jamaica,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,130,13.9,18.1,1.358,99.7,12661.3324691366,1.4
+JPN,Japan,East Asia & Pacific,High income,Ingreso alto,3,0.8,2.4,1.2,99.8,52726.2389417641,1.2
+JOR,Jordan,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income,Ingreso medio-alto,31,7.6,13.3,2.639,99.7,11450.5720698729,0.1
+KAZ,Kazakhstan,Europe & Central Asia,Upper middle income,Ingreso medio-alto,10,4.3,9.6,3.012,99.9,38546.9287207389,0
+KEN,Kenya,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,149,21.1,39.6,3.208,70.2,6322.24569873446,45.5
+KIR,Kiribati,East Asia & Pacific,Lower middle income,Ingreso medio-bajo,80,22.2,54.5,3.147,91.9,3526.6871592056,0.9
+PRK,"Korea, Dem. People's Rep.",East Asia & Pacific,Low income,Ingreso bajo,67,9.7,18,1.78,99.5,NA,NA
+KOR,"Korea, Rep.",East Asia & Pacific,High income,Ingreso alto,4,1.2,2.9,0.721,100,57429.8031076402,0.1
+XKX,Kosovo,Europe & Central Asia,Upper middle income,Ingreso medio-alto,NA,6.8,9.1,1.545,99,15817.4329388361,10
+KWT,Kuwait,"Middle East, North Africa, Afghanistan & Pakistan",High income,Ingreso alto,8,4.6,8.4,1.524,99.9,53083.3848600632,NA
+KGZ,Kyrgyz Republic,Europe & Central Asia,Lower middle income,Ingreso medio-bajo,42,10.9,17,2.7,100,7304.10137976789,2.7
+LAO,Lao PDR,East Asia & Pacific,Lower middle income,Ingreso medio-bajo,112,13.6,30.5,2.421,64.4,9299.44710059913,15.7
+LVA,Latvia,Europe & Central Asia,High income,Ingreso alto,19,1.3,2.8,1.36,99.9,42783.8260226567,0.4
+LBN,Lebanon,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,Ingreso medio-bajo,15,10.2,17,2.239,NA,12585.1973845359,5.8
+LSO,Lesotho,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,478,29.1,61.3,2.694,86.6,2879.59482438145,41.9
+LBR,Liberia,Sub-Saharan Africa,Low income,Ingreso bajo,628,33.1,87.3,3.95,84.4,1796.01250525501,33.6
+LBY,Libya,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income,Ingreso medio-alto,59,5.8,31.7,2.355,99.9,13858.4923072147,NA
+LIE,Liechtenstein,Europe & Central Asia,High income,Ingreso alto,NA,NA,NA,1.45,NA,NA,NA
+LTU,Lithuania,Europe & Central Asia,High income,Ingreso alto,8,1.9,3.4,1.18,100,52720.0689650863,1.1
+LUX,Luxembourg,Europe & Central Asia,High income,Ingreso alto,11,1.5,2.2,1.25,NA,152596.126692093,0.1
+MAC,"Macao SAR, China",East Asia & Pacific,High income,Ingreso alto,NA,NA,NA,0.586,NA,116424.421317954,NA
+MDG,Madagascar,Sub-Saharan Africa,Low income,Ingreso bajo,445,23.3,63.6,3.972,45.8,1810.09891584306,69.2
+MWI,Malawi,Sub-Saharan Africa,Low income,Ingreso bajo,225,23.8,49.6,3.648,96.4,1831.97332483901,75.4
+MYS,Malaysia,East Asia & Pacific,Upper middle income,Ingreso medio-alto,26,4.2,8.3,1.55,99.6,36496.9483630681,0
+MDV,Maldives,South Asia,Upper middle income,Ingreso medio-alto,32,3.9,5.7,1.575,99.5,24806.6325837081,0
+MLI,Mali,Sub-Saharan Africa,Low income,Ingreso bajo,367,28.7,76.2,5.614,67.3,3178.41515939915,36.1
+MLT,Malta,"Middle East, North Africa, Afghanistan & Pakistan",High income,Ingreso alto,8,3.7,5.5,1.06,99.8,67101.1037962636,0.4
+MHL,Marshall Islands,East Asia & Pacific,Upper middle income,Ingreso medio-alto,155,12.9,27.6,2.919,92.4,7525.1504555076,2.1
+MRT,Mauritania,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,381,21.3,38.1,4.697,70.4,6971.65100210032,10.2
+MUS,Mauritius,Sub-Saharan Africa,Upper middle income,Ingreso medio-alto,66,9.5,15.4,1.4,99.7,29402.9391464973,0.5
+MEX,Mexico,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,42,8.5,13.4,1.91,96.6,25188.3182559609,2.3
+FSM,"Micronesia, Fed. Sts.",East Asia & Pacific,Upper middle income,Ingreso medio-alto,129,12,23.1,2.748,NA,4266.72631824787,26.1
+MDA,Moldova,Europe & Central Asia,Upper middle income,Ingreso medio-alto,19,12.1,16.2,1.731,99.6,17750.5576656772,0.1
+MCO,Monaco,Europe & Central Asia,High income,Ingreso alto,5,1.4,2.7,2.11,NA,NA,NA
+MNG,Mongolia,East Asia & Pacific,Upper middle income,Ingreso medio-alto,41,7.4,13.6,2.7,99.3,18019.6912274585,0.4
+MNE,Montenegro,Europe & Central Asia,Upper middle income,Ingreso medio-alto,6,0.9,2.5,1.74,98.8,31862.873635118,2.5
+MAR,Morocco,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,Ingreso medio-bajo,70,10,16.3,2.23,86.6,9902.8056640625,3.7
+MOZ,Mozambique,Sub-Saharan Africa,Low income,Ingreso bajo,99,25.6,61.7,4.763,73,1680.20873445078,81.4
+MMR,Myanmar,East Asia & Pacific,Lower middle income,Ingreso medio-bajo,185,20.1,38.1,2.115,60.2,5958.26424874022,10.3
+NAM,Namibia,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,139,22.1,41.1,3.212,88.2,11247.8071969605,22.9
+NRU,Naoero,East Asia & Pacific,High income,Ingreso alto,273,4.7,8.7,3.331,NA,13171.9554999008,9.7
+NPL,Nepal,South Asia,Lower middle income,Ingreso medio-bajo,142,15.8,26.1,1.984,77.2,5399.65505811688,2.4
+NLD,Netherlands,Europe & Central Asia,High income,Ingreso alto,4,2.6,3.9,1.43,NA,80391.6029350952,0.1
+NCL,New Caledonia,East Asia & Pacific,High income,Ingreso alto,NA,NA,NA,1.98,NA,NA,NA
+NZL,New Zealand,East Asia & Pacific,High income,Ingreso alto,7,2.7,4.9,1.57,96.5,54949.699278118,NA
+NIC,Nicaragua,Latin America & Caribbean,Lower middle income,Ingreso medio-bajo,60,7.1,13.8,2.218,94.1,8326.83840449159,6.6
+NER,Niger,Sub-Saharan Africa,Low income,Ingreso bajo,350,33.2,113.5,6.061,43.7,1902.69710752042,60.5
+NGA,Nigeria,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,993,39.2,116.8,4.482,50.7,8711.68686099289,41.8
+MKD,North Macedonia,Europe & Central Asia,Upper middle income,Ingreso medio-alto,3,1.4,3.4,1.5,100,25354.144126576,3.9
+MNP,Northern Mariana Islands,East Asia & Pacific,High income,Ingreso alto,NA,NA,NA,2.348,NA,NA,NA
+NOR,Norway,Europe & Central Asia,High income,Ingreso alto,1,1.4,2.4,1.4,99.2,107767.977198972,0.2
+OMN,Oman,"Middle East, North Africa, Afghanistan & Pakistan",High income,Ingreso alto,13,5.6,10.4,2.525,99.9,41979.5975879711,NA
+PAK,Pakistan,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,Ingreso medio-bajo,155,37,57.8,3.605,68,6018.94650802152,16.5
+PLW,Palau,East Asia & Pacific,High income,Ingreso alto,89,11.5,21.9,1.907,97.2,18313.2535592192,NA
+PAN,Panama,Latin America & Caribbean,High income,Ingreso alto,37,6.1,15.1,2.119,95,39846.2245506562,3.7
+PNG,Papua New Guinea,East Asia & Pacific,Lower middle income,Ingreso medio-bajo,189,20.5,40.6,3.099,56.4,4672.27238740885,NA
+PRY,Paraguay,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,58,8.9,16.9,2.422,92.2,17585.0746806625,2.4
+PER,Peru,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,51,6.7,13.3,1.98,94.9,17041.5682788302,5.9
+PHL,Philippines,East Asia & Pacific,Upper middle income,Ingreso medio-alto,84,13.9,27,1.916,84.4,10994.8840414773,5.3
+POL,Poland,Europe & Central Asia,High income,Ingreso alto,2,2.6,4.3,1.2,99.6,48473.0940286419,0.2
+PRT,Portugal,Europe & Central Asia,High income,Ingreso alto,15,1.7,3.2,1.45,98.6,49800.3476220918,0.4
+PRI,Puerto Rico (US),Latin America & Caribbean,High income,Ingreso alto,11,NA,NA,0.92,NA,47582.5504550609,NA
+QAT,Qatar,"Middle East, North Africa, Afghanistan & Pakistan",High income,Ingreso alto,4,3.9,6,1.729,100,129024.806992334,0
+ROU,Romania,Europe & Central Asia,High income,Ingreso alto,12,3.4,6.9,1.54,93,45981.6373404846,0.7
+RUS,Russian Federation,Europe & Central Asia,High income,Ingreso alto,9,2.2,5.3,1.41,99.6,44298.67578125,0.1
+RWA,Rwanda,Sub-Saharan Africa,Low income,Ingreso bajo,229,17.6,38.8,3.698,94.2,3518.91850615405,38.6
+WSM,Samoa,East Asia & Pacific,Upper middle income,Ingreso medio-alto,101,6,15.3,3.829,88.9,8202.61231371824,4.5
+SMR,San Marino,Europe & Central Asia,High income,Ingreso alto,8,0.6,1.3,1.149,NA,78810.3378046111,NA
+STP,Sao Tome and Principe,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,75,6.7,14.1,3.644,96.8,6155.05042011344,13
+SAU,Saudi Arabia,"Middle East, North Africa, Afghanistan & Pakistan",High income,Ingreso alto,7,3,6.2,2.28,94.8,71623.785419098,NA
+SEN,Senegal,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,237,21.7,38.2,3.818,74.5,4781.55234083159,17.9
+SRB,Serbia,Europe & Central Asia,Upper middle income,Ingreso medio-alto,11,3.1,5.4,1.62,99.9,29776.9743496564,1.1
+SYC,Seychelles,Sub-Saharan Africa,High income,Ingreso alto,42,8.5,14.3,2.18,99.5,31893.9628108379,0.7
+SLE,Sierra Leone,Sub-Saharan Africa,Low income,Ingreso bajo,354,28.8,93.8,3.791,86.9,3371.09351712436,41.5
+SGP,Singapore,East Asia & Pacific,High income,Ingreso alto,6,1.1,2.6,0.97,99.6,144728.385132013,NA
+SXM,Sint Maarten (Dutch part),Latin America & Caribbean,High income,Ingreso alto,NA,NA,NA,1.447,NA,51729.2528621078,NA
+SVK,Slovak Republic,Europe & Central Asia,High income,Ingreso alto,4,3.2,6.2,1.49,98,45864.6125430469,0.5
+SVN,Slovenia,Europe & Central Asia,High income,Ingreso alto,3,1.3,2.3,1.51,99.8,56150.6852244867,0
+SLB,Solomon Islands,East Asia & Pacific,Lower middle income,Ingreso medio-bajo,123,8.3,20.6,3.557,86.2,2599.03676008376,40.3
+SOM,"Somalia, Fed. Rep.",Sub-Saharan Africa,Low income,Ingreso bajo,563,34.8,104.3,6.132,31.9,1556.89233845758,NA
+ZAF,South Africa,Sub-Saharan Africa,Upper middle income,Ingreso medio-alto,118,12.2,34.8,2.216,96.7,15212.2609596178,17.4
+SSD,South Sudan,Sub-Saharan Africa,Low income,Ingreso bajo,692,39.5,96.7,3.864,39.7,1154.88686304107,76.5
+ESP,Spain,Europe & Central Asia,High income,Ingreso alto,3,1.7,3.2,1.12,99.9,55661.317481747,0.8
+LKA,Sri Lanka,South Asia,Upper middle income,Ingreso medio-alto,18,4.1,6.1,1.974,99.5,14512.1432202455,2.7
+KNA,St. Kitts and Nevis,Latin America & Caribbean,High income,Ingreso alto,74,10.3,16.4,1.505,100,34007.6371717125,NA
+LCA,St. Lucia,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,44,11.4,17.5,1.379,100,26253.9280339233,0.1
+MAF,St. Martin (French part),Latin America & Caribbean,High income,Ingreso alto,NA,NA,NA,2.718,NA,NA,NA
+VCT,St. Vincent and the Grenadines,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,56,9.3,11.8,1.775,98.6,19836.205036664,NA
+SDN,Sudan,Sub-Saharan Africa,Low income,Ingreso bajo,256,24.2,63.1,4.323,77.7,2422.6533203125,10.1
+SUR,Suriname,Latin America & Caribbean,Upper middle income,Ingreso medio-alto,84,10,16.3,2.249,98.4,21127.5975244081,2.2
+SWE,Sweden,Europe & Central Asia,High income,Ingreso alto,4,1.4,2.4,1.45,NA,68457.9015289277,0.8
+CHE,Switzerland,Europe & Central Asia,High income,Ingreso alto,5,2.8,3.9,1.33,NA,93939.7784980038,0.1
+SYR,Syrian Arab Republic,"Middle East, North Africa, Afghanistan & Pakistan",Low income,Ingreso bajo,20,9.8,20.1,2.712,NA,4905.15252202552,18
+TJK,Tajikistan,Europe & Central Asia,Lower middle income,Ingreso medio-bajo,14,11.3,28.8,3.072,94.8,4967.6740543988,7.3
+TZA,Tanzania,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,276,20.6,38.5,4.606,63.5,4021.82885742188,51.3
+THA,Thailand,East Asia & Pacific,Upper middle income,Ingreso medio-alto,34,5.3,9.2,1.212,99.1,23598.3745068685,0
+TLS,Timor-Leste,East Asia & Pacific,Lower middle income,Ingreso medio-bajo,192,22.1,49.2,2.707,56.7,4810.78356024783,44
+TGO,Togo,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,349,23,58.1,4.192401,69.4,3572.00417260831,34.7
+TON,Tonga,East Asia & Pacific,Upper middle income,Ingreso medio-alto,67,4.3,9.8,3.129,98.3,7810.10184717265,0.4
+TTO,Trinidad and Tobago,Latin America & Caribbean,High income,Ingreso alto,54,13,19.3,1.532,100,34651.9065448775,NA
+TUN,Tunisia,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,Ingreso medio-bajo,36,8.3,12.9,1.832,99.5,14052.1687041992,0.7
+TUR,Turkiye,Europe & Central Asia,Upper middle income,Ingreso medio-alto,15,4.8,13.8,1.51,97,43196.3381254367,0.2
+TKM,Turkmenistan,Europe & Central Asia,Upper middle income,Ingreso medio-alto,5,22.8,40.2,2.69,100,19644.7256847416,NA
+TCA,Turks and Caicos Islands,Latin America & Caribbean,High income,Ingreso alto,NA,2.5,4.8,1.463,100,35365.8657232406,NA
+TUV,Tuvalu,East Asia & Pacific,Upper middle income,Ingreso medio-alto,170,8.9,19.8,3.208,99.5,5903.8648736232,9
+UGA,Uganda,Sub-Saharan Africa,Low income,Ingreso bajo,170,21.5,49.4,4.283,74.2,3100.19016956104,54.4
+UKR,Ukraine,Europe & Central Asia,Upper middle income,Ingreso medio-alto,15,4.7,8,0.977,99.9,17679.904296875,0
+ARE,United Arab Emirates,"Middle East, North Africa, Afghanistan & Pakistan",High income,Ingreso alto,3,2.5,5,1.2,99.2,78019.5228244288,0
+GBR,United Kingdom,Europe & Central Asia,High income,Ingreso alto,8,3,4.6,1.56,NA,60786.7193353069,0.4
+USA,United States,North America,High income,Ingreso alto,17,3.6,6.5,1.6165,99.1,82586.7847707891,1.2
+URY,Uruguay,Latin America & Caribbean,High income,Ingreso alto,15,4.1,7.4,1.409,100,34545.6803727886,0.2
+UZB,Uzbekistan,Europe & Central Asia,Lower middle income,Ingreso medio-bajo,26,7.8,13.7,3.5,99,11678.6257366395,4.1
+VUT,Vanuatu,East Asia & Pacific,Lower middle income,Ingreso medio-bajo,100,9.2,17.5,3.596,89.4,4201.80837273668,19.5
+VEN,"Venezuela, RB",Latin America & Caribbean,Lower middle income,Ingreso medio-bajo,227,15,24.2,2.079,98.7,NA,NA
+VNM,Viet Nam,East Asia & Pacific,Upper middle income,Ingreso medio-alto,48,9.1,17.8,1.913,96.1,15033.899969483,1.6
+VIR,Virgin Islands (U.S.),Latin America & Caribbean,High income,Ingreso alto,NA,NA,NA,1.98,NA,49785.1412220186,NA
+PSE,West Bank and Gaza,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,Ingreso medio-bajo,16,9.2,41.9,3.311,99.7,6178.51270322198,2.1
+YEM,"Yemen, Rep.","Middle East, North Africa, Afghanistan & Pakistan",Low income,Ingreso bajo,118,21.3,39.5,4.59,44.7,NA,33.3
+ZMB,Zambia,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,85,21.5,49.1,4.101,80.4,4080.35544205923,71.7
+ZWE,Zimbabwe,Sub-Saharan Africa,Lower middle income,Ingreso medio-bajo,358,33.6,64.2,3.724,86,5795.99047011573,49.2
