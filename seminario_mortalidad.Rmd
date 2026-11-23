@@ -224,82 +224,25 @@ Algunos indicadores (pobreza, partos atendidos) se miden con encuestas cada poco
 # Para cada variable nos quedamos con el dato más reciente disponible.
 # En pobreza y partos atendidos ampliamos el periodo hasta 2010,
 # porque estas variables no se actualizan todos los años.
+ultimo_dato <- function(datos, variable, desde = 2015, hasta = 2023) {
+  datos %>%
+    filter(year >= desde, year <= hasta, !is.na(.data[[variable]])) %>%
+    group_by(iso3c) %>%
+    slice_max(order_by = year, n = 1, with_ties = FALSE) %>%
+    ungroup() %>%
+    select(iso3c, all_of(variable))
+}
 
-rmm_pais <- panel %>%
-  filter(year >= 2015, year <= 2023, !is.na(rmm)) %>%
-  group_by(iso3c) %>%
-  slice_max(year, n = 1, with_ties = FALSE) %>%
-  ungroup() %>%
-  select(iso3c, rmm)
-
-tmn_pais <- panel %>%
-  filter(year >= 2015, year <= 2023, !is.na(tmn)) %>%
-  group_by(iso3c) %>%
-  slice_max(year, n = 1, with_ties = FALSE) %>%
-  ungroup() %>%
-  select(iso3c, tmn)
-
-tm5_pais <- panel %>%
-  filter(year >= 2015, year <= 2023, !is.na(tm5)) %>%
-  group_by(iso3c) %>%
-  slice_max(year, n = 1, with_ties = FALSE) %>%
-  ungroup() %>%
-  select(iso3c, tm5)
-
-fecundidad_pais <- panel %>%
-  filter(year >= 2015, year <= 2023, !is.na(fecundidad)) %>%
-  group_by(iso3c) %>%
-  slice_max(year, n = 1, with_ties = FALSE) %>%
-  ungroup() %>%
-  select(iso3c, fecundidad)
-
-pib_pais <- panel %>%
-  filter(year >= 2015, year <= 2023, !is.na(pib_pc_ppa)) %>%
-  group_by(iso3c) %>%
-  slice_max(year, n = 1, with_ties = FALSE) %>%
-  ungroup() %>%
-  select(iso3c, pib_pc_ppa)
-
-partos_pais <- panel %>%
-  filter(year >= 2010, year <= 2023, !is.na(partos_cual)) %>%
-  group_by(iso3c) %>%
-  slice_max(year, n = 1, with_ties = FALSE) %>%
-  ungroup() %>%
-  select(iso3c, partos_cual)
-
-pobreza_pais <- panel %>%
-  filter(year >= 2010, year <= 2023, !is.na(pobreza_ext)) %>%
-  group_by(iso3c) %>%
-  slice_max(year, n = 1, with_ties = FALSE) %>%
-  ungroup() %>%
-  select(iso3c, pobreza_ext)
-
-# Los indicadores ambientales también se publican con retraso, así que ampliamos el periodo hasta 2010.
-pm25_pais <- panel %>%
-  filter(year >= 2010, year <= 2023, !is.na(pm25)) %>%
-  group_by(iso3c) %>%
-  slice_max(year, n = 1, with_ties = FALSE) %>%
-  ungroup() %>%
-  select(iso3c, pm25)
-
-comb_pais <- panel %>%
-  filter(year >= 2010, year <= 2023, !is.na(comb_limpios)) %>%
-  group_by(iso3c) %>%
-  slice_max(year, n = 1, with_ties = FALSE) %>%
-  ungroup() %>%
-  select(iso3c, comb_limpios)
-
-# Unimos las tablas, que tienen una fila por país.
 corte <- paises %>%
-  left_join(rmm_pais, by = "iso3c") %>%
-  left_join(tmn_pais, by = "iso3c") %>%
-  left_join(tm5_pais, by = "iso3c") %>%
-  left_join(fecundidad_pais, by = "iso3c") %>%
-  left_join(pib_pais, by = "iso3c") %>%
-  left_join(partos_pais, by = "iso3c") %>%
-  left_join(pobreza_pais, by = "iso3c") %>%
-  left_join(pm25_pais, by = "iso3c") %>%
-  left_join(comb_pais, by = "iso3c")
+  left_join(ultimo_dato(panel, "rmm"), by = "iso3c") %>%
+  left_join(ultimo_dato(panel, "tmn"), by = "iso3c") %>%
+  left_join(ultimo_dato(panel, "tm5"), by = "iso3c") %>%
+  left_join(ultimo_dato(panel, "fecundidad"), by = "iso3c") %>%
+  left_join(ultimo_dato(panel, "pib_pc_ppa"), by = "iso3c") %>%
+  left_join(ultimo_dato(panel, "partos_cual", desde = 2010), by = "iso3c") %>%
+  left_join(ultimo_dato(panel, "pobreza_ext", desde = 2010), by = "iso3c") %>%
+  left_join(ultimo_dato(panel, "pm25", desde = 2010), by = "iso3c") %>%
+  left_join(ultimo_dato(panel, "comb_limpios", desde = 2010), by = "iso3c")
 
 write_csv(corte, "OUTPUT/corte_ultimo_dato_por_pais.csv")
 
