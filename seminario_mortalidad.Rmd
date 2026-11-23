@@ -1,0 +1,660 @@
+---
+title: "Dar a luz sin red: mortalidad materna y neonatal, natalidad y pobreza en el mundo"
+author: "Yousra El Jarjini"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+subtitle: "Fuentes de Datos Biomédicos y Web Semántica - Grado en Ingeniería de la Salud (UBU) - Curso 2026-2027"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+    theme: flatly
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, warning = FALSE, message = FALSE,
+  fig.align = "center", fig.width = 9, fig.height = 5.5
+)
+
+# Cargamos los paquetes que utilizaremos en el trabajo.
+# Si alguno no está instalado, hay que instalarlo antes con install.packages().
+library(tidyverse)
+library(sf)
+library(giscoR)
+library(scales)
+library(knitr)
+library(broom)
+library(jsonlite)
+
+# Paleta fija para los grupos de ingreso (rojo = más pobre, azul = más rico)
+paleta <- c(
+  "Ingreso bajo"       = "#b2182b",
+  "Ingreso medio-bajo" = "#ef8a62",
+  "Ingreso medio-alto" = "#67a9cf",
+  "Ingreso alto"       = "#2166ac"
+)
+```
+
+# 1. Introducción
+
+Dar a luz debería ser uno de los momentos más seguros de la vida, pero depende mucho del lugar del mundo en el que ocurra. Según la OMS, en 2023 murieron unas **260.000 mujeres** por causas relacionadas con el embarazo y el parto, y alrededor del **92 %** de esas muertes ocurrieron en países de ingresos bajos y medio-bajos; la mayoría eran evitables (WHO et al., 2025). A los bebés les pasa algo parecido: en 2024 murieron **2,3 millones de niños en su primer mes de vida**, y las muertes de recién nacidos suponen ya casi la mitad de todas las muertes de menores de cinco años (UN IGME, 2026).
+
+Las causas son, en gran parte, "básicas": hemorragias, infecciones, hipertensión del embarazo y complicaciones del parto en las madres (Cresswell et al., 2025), y prematuridad, asfixia al nacer e infecciones en los recién nacidos (UN IGME, 2026). Todas tienen tratamiento conocido y barato, pero necesitan **personal sanitario, medicamentos y un centro de salud cerca**, justo lo que falta en los países más pobres y en las zonas de conflicto.
+
+**El ambiente también cuenta.** La salud de la madre y del recién nacido depende además del aire que respiran. La contaminación del aire exterior (partículas finas, PM2.5) y la del interior de las casas, que aparece cuando se cocina con leña, carbón o estiércol, se asocian con peor salud materna e infantil (WHO, 2024). Por eso este trabajo incluye dos indicadores ambientales: la exposición media a PM2.5 y el porcentaje de población con acceso a combustibles limpios para cocinar.
+
+**Natalidad, natalismo y antinatalismo.** Este tema suele mezclarse con el debate sobre cuántos hijos se tienen. Conviene separar tres ideas:
+
+- La **natalidad** es un dato: cuántos bebés nacen (aquí, la tasa de fecundidad, es decir, hijos por mujer).
+- El **natalismo** defiende fomentar los nacimientos (por ejemplo, con ayudas a la natalidad), y el **antinatalismo** defiende lo contrario. Como política demográfica, el antinatalismo se ha aplicado de forma más o menos coercitiva (la política del hijo único en China, entre 1980 y 2015, es el ejemplo más conocido) y ha recibido muchas críticas por vulnerar derechos reproductivos. Como corriente filosófica, el antinatalismo sostiene que traer una vida al mundo es éticamente problemático (Benatar, 2006).
+- Este trabajo **no toma partido** en ese debate. Lo que nos interesa es una pregunta empírica: *cada embarazo, ¿cuánto riesgo tiene según el país?* Y aquí hay un matiz importante: cuantos más embarazos tiene una mujer a lo largo de su vida, más veces se expone a ese riesgo, así que fecundidad y mortalidad materna están conectadas. Pero la relación también funciona al revés (donde mueren muchos niños, las familias tienden a tener más hijos, algo que describe la teoría de la transición demográfica). Por eso es difícil separar causa y consecuencia.
+
+**Lo que se sabe:** que la mortalidad materna y neonatal se concentra en África subsahariana y el sur de Asia y que la pobreza y la falta de atención cualificada son factores centrales.
+**Lo que queremos abordar:** cuantificar, con datos públicos y reproducibles, cómo se relacionan **a la vez** mortalidad materna, mortalidad neonatal, fecundidad, nivel de pobreza y exposición a la contaminación del aire, y cuánto de esa relación pasa por la atención cualificada en el parto.
+
+
+# 2. Objetivo general
+
+Analizar, a escala de país, la relación entre la mortalidad materna y neonatal, la fecundidad, el nivel de pobreza y la exposición a la contaminación del aire, y valorar el papel de la atención sanitaria cualificada en el parto.
+
+# 3. Objetivos específicos
+
+1. **Descripción espacial:** ¿en qué países se concentran las muertes maternas y neonatales?
+2. **Descripción temporal:** ¿cómo han evolucionado entre 2000 y 2023 según el nivel de ingreso del país, y se han cerrado las diferencias?
+3. **Fecundidad:** ¿existe relación entre la fecundidad y la mortalidad materna y neonatal?
+4. **Pobreza, atención sanitaria y ambiente:** ¿cómo se relaciona la mortalidad con la pobreza (PIB per cápita y pobreza extrema), con los partos atendidos por personal cualificado y con la contaminación del aire (PM2.5 y combustibles limpios para cocinar)? ¿Se mantiene la relación al controlar las demás variables?
+
+# 4. Metodología general
+
+## 4.1 Fuentes de datos
+
+Los indicadores de mortalidad, fecundidad, pobreza y atención sanitaria proceden de los **World Development Indicators del Banco Mundial** (que recogen estimaciones de OMS, UNICEF, UNFPA y ONU). Se descargan como archivos CSV y se importan desde la carpeta `Data` con `read_csv()`. Los mapas proceden de **Eurostat-GISCO** (paquete `giscoR`).
+
+| Variable (nombre en el código) | Indicador del Banco Mundial | Qué mide |
+|---|---|---|
+| `rmm` | SH.STA.MMRT | Muertes maternas por 100.000 nacidos vivos (estimación modelizada) |
+| `tmn` | SH.DYN.NMRT | Muertes en los primeros 28 días por 1.000 nacidos vivos |
+| `tm5` | SH.DYN.MORT | Muertes antes de los 5 años por 1.000 nacidos vivos |
+| `fecundidad` | SP.DYN.TFRT.IN | Hijos por mujer |
+| `partos_cual` | SH.STA.BRTC.ZS | % de partos atendidos por personal sanitario cualificado |
+| `pib_pc_ppa` | NY.GDP.PCAP.PP.CD | PIB per cápita en paridad de poder adquisitivo (dólares) |
+| `pobreza_ext` | SI.POV.DDAY | % de población bajo la línea internacional de pobreza extrema |
+| `pm25` | EN.ATM.PM25.MC.M3 | Exposición media anual a partículas PM2.5 (microgramos por m³) |
+| `comb_limpios` | EG.CFT.ACCS.ZS | % de población con acceso a combustibles y tecnologías limpias para cocinar |
+
+## 4.2 Importación de los datos desde la carpeta `Data`
+
+Los archivos del Banco Mundial ya están descargados y guardados en la carpeta `Data` (los nueve indicadores de la tabla, uno por archivo; para los dos ambientales se entra en `data.worldbank.org/indicator/<código>` y se pulsa *Download CSV*). Por tanto, **no hace falta descargarlos otra vez ni utilizar caché**. Vamos a leer los archivos CSV con `read_csv()`.
+
+Los archivos de cada indicador se llaman `API_<código>_...csv` y contienen cuatro líneas de información antes de la tabla. Por eso usamos `skip = 4`. También tenemos un archivo `Metadata_Country_...csv`, que contiene el nombre, la región y el grupo de ingreso de cada país.
+
+```{r importacion}
+# Comprobamos que existe la carpeta donde están los archivos.
+if (!dir.exists("Data")) {
+  stop("No encuentro la carpeta Data. Debe estar junto al archivo Rmd.")
+}
+
+# Creamos la carpeta donde guardaremos los resultados.
+dir.create("OUTPUT", showWarnings = FALSE)
+
+# Esta función lee el archivo CSV de un indicador.
+leer_indicador <- function(codigo, nombre) {
+
+  # Buscamos el archivo cuyo nombre empieza por API_ y el código indicado.
+  ruta <- list.files("Data",
+                     pattern = paste0("^API_", codigo, ".*\\.csv$"),
+                     full.names = TRUE,
+                     recursive = TRUE)
+
+  # Si no encuentra el archivo, muestra un mensaje.
+  if (length(ruta) == 0) {
+    stop("Falta el archivo del indicador ", codigo, " en la carpeta Data.")
+  }
+
+  # Leemos el CSV, saltamos las 4 primeras líneas y organizamos los datos.
+  datos <- read_csv(ruta[1], skip = 4, show_col_types = FALSE) %>%
+    rename(iso3c = `Country Code`) %>%
+    pivot_longer(cols = matches("^[0-9]{4}$"),
+                 names_to = "year",
+                 values_to = "valor") %>%
+    mutate(year = as.integer(year)) %>%
+    select(iso3c, year, valor)
+
+  # Cambiamos el nombre de la columna valor por el nombre del indicador.
+  names(datos)[3] <- nombre
+
+  datos
+}
+
+# Leemos los nueve indicadores. Cada uno queda en una tabla.
+rmm <- leer_indicador("SH.STA.MMRT", "rmm")
+tmn <- leer_indicador("SH.DYN.NMRT", "tmn")
+tm5 <- leer_indicador("SH.DYN.MORT", "tm5")
+fecundidad <- leer_indicador("SP.DYN.TFRT.IN", "fecundidad")
+partos_cual <- leer_indicador("SH.STA.BRTC.ZS", "partos_cual")
+pib_pc_ppa <- leer_indicador("NY.GDP.PCAP.PP.CD", "pib_pc_ppa")
+pobreza_ext <- leer_indicador("SI.POV.DDAY", "pobreza_ext")
+pm25 <- leer_indicador("EN.ATM.PM25.MC.M3", "pm25")
+comb_limpios <- leer_indicador("EG.CFT.ACCS.ZS", "comb_limpios")
+
+# Buscamos el archivo con los datos generales de los países.
+ruta_meta <- list.files("Data",
+                        pattern = "^Metadata_Country.*\\.csv$",
+                        full.names = TRUE,
+                        recursive = TRUE)
+
+if (length(ruta_meta) == 0) {
+  stop("Falta el archivo Metadata_Country en la carpeta Data.")
+}
+
+# Leemos el nombre, la región y el grupo de ingreso de cada país.
+meta <- read_csv(ruta_meta[1], show_col_types = FALSE) %>%
+  select(iso3c = `Country Code`,
+         country = TableName,
+         region = Region,
+         income = IncomeGroup)
+
+# Unimos los nueve indicadores usando el código del país y el año.
+bruto <- rmm %>%
+  full_join(tmn, by = c("iso3c", "year")) %>%
+  full_join(tm5, by = c("iso3c", "year")) %>%
+  full_join(fecundidad, by = c("iso3c", "year")) %>%
+  full_join(partos_cual, by = c("iso3c", "year")) %>%
+  full_join(pib_pc_ppa, by = c("iso3c", "year")) %>%
+  full_join(pobreza_ext, by = c("iso3c", "year")) %>%
+  full_join(pm25, by = c("iso3c", "year")) %>%
+  full_join(comb_limpios, by = c("iso3c", "year")) %>%
+  left_join(meta, by = "iso3c")
+
+# Comprobamos cómo ha quedado la tabla.
+glimpse(bruto)
+```
+
+## 4.3 Preparación: separar y volver a unir con *joins*
+
+El Banco Mundial mezcla **países** con **agregados** (por ejemplo "África subsahariana" o "Mundo"). Si no los separamos, contaríamos dos veces las mismas muertes. Para evitarlo, dividimos los datos en tablas temáticas y las volvemos a unir:
+
+- `anti_join()` nos enseña qué filas son agregados y no países.
+- `inner_join()` y `left_join()` unen la tabla de países con las tablas de madres, niños, economía, fecundidad y ambiente.
+- Los `join()` permiten unir las tablas usando el código de cada país.
+- Más adelante, `left_join()` une esa tabla con el mapa del mundo.
+
+```{r joins}
+# 1) Tabla de países (sin agregados regionales)
+paises <- bruto %>%
+  filter(!is.na(region)) %>%
+  distinct(iso3c, pais = country, region, income) %>%
+  mutate(grupo_ingreso = factor(
+    income,
+    levels = c("Low income", "Lower middle income", "Upper middle income", "High income"),
+    labels = c("Ingreso bajo", "Ingreso medio-bajo", "Ingreso medio-alto", "Ingreso alto")
+  ))
+
+# 2) anti_join: ¿qué filas descartamos por ser agregados?
+agregados <- bruto %>%
+  distinct(iso3c, country) %>%
+  anti_join(paises, by = "iso3c")
+cat("Agregados descartados (ejemplos):", paste(head(agregados$country, 8), collapse = "; "), "\n")
+
+# 3) Tablas temáticas
+t_madres  <- bruto %>% select(iso3c, year, rmm, partos_cual)
+t_ninos   <- bruto %>% select(iso3c, year, tmn, tm5)
+t_pobreza <- bruto %>% select(iso3c, year, pib_pc_ppa, pobreza_ext)
+t_fecund  <- bruto %>% select(iso3c, year, fecundidad)
+t_ambiente <- bruto %>% select(iso3c, year, pm25, comb_limpios)
+
+# 4) Panel país-año: unimos todo con joins
+panel <- paises %>%
+  inner_join(t_madres,  by = "iso3c") %>%
+  left_join(t_ninos,    by = c("iso3c", "year")) %>%
+  left_join(t_pobreza,  by = c("iso3c", "year")) %>%
+  left_join(t_fecund,   by = c("iso3c", "year")) %>%
+  left_join(t_ambiente, by = c("iso3c", "year"))
+
+nrow(panel)
+```
+
+## 4.4 Un dato por país: el último valor disponible
+
+Algunos indicadores (pobreza, partos atendidos) se miden con encuestas cada pocos años, así que no hay dato todos los años. Por eso buscamos por separado el último dato disponible de cada variable y después unimos las tablas por el código del país.
+
+```{r ultimo-dato}
+# Para cada variable nos quedamos con el dato más reciente disponible.
+# En pobreza y partos atendidos ampliamos el periodo hasta 2010,
+# porque estas variables no se actualizan todos los años.
+
+rmm_pais <- panel %>%
+  filter(year >= 2015, year <= 2023, !is.na(rmm)) %>%
+  group_by(iso3c) %>%
+  slice_max(year, n = 1, with_ties = FALSE) %>%
+  ungroup() %>%
+  select(iso3c, rmm)
+
+tmn_pais <- panel %>%
+  filter(year >= 2015, year <= 2023, !is.na(tmn)) %>%
+  group_by(iso3c) %>%
+  slice_max(year, n = 1, with_ties = FALSE) %>%
+  ungroup() %>%
+  select(iso3c, tmn)
+
+tm5_pais <- panel %>%
+  filter(year >= 2015, year <= 2023, !is.na(tm5)) %>%
+  group_by(iso3c) %>%
+  slice_max(year, n = 1, with_ties = FALSE) %>%
+  ungroup() %>%
+  select(iso3c, tm5)
+
+fecundidad_pais <- panel %>%
+  filter(year >= 2015, year <= 2023, !is.na(fecundidad)) %>%
+  group_by(iso3c) %>%
+  slice_max(year, n = 1, with_ties = FALSE) %>%
+  ungroup() %>%
+  select(iso3c, fecundidad)
+
+pib_pais <- panel %>%
+  filter(year >= 2015, year <= 2023, !is.na(pib_pc_ppa)) %>%
+  group_by(iso3c) %>%
+  slice_max(year, n = 1, with_ties = FALSE) %>%
+  ungroup() %>%
+  select(iso3c, pib_pc_ppa)
+
+partos_pais <- panel %>%
+  filter(year >= 2010, year <= 2023, !is.na(partos_cual)) %>%
+  group_by(iso3c) %>%
+  slice_max(year, n = 1, with_ties = FALSE) %>%
+  ungroup() %>%
+  select(iso3c, partos_cual)
+
+pobreza_pais <- panel %>%
+  filter(year >= 2010, year <= 2023, !is.na(pobreza_ext)) %>%
+  group_by(iso3c) %>%
+  slice_max(year, n = 1, with_ties = FALSE) %>%
+  ungroup() %>%
+  select(iso3c, pobreza_ext)
+
+# Los indicadores ambientales también se publican con retraso, así que ampliamos el periodo hasta 2010.
+pm25_pais <- panel %>%
+  filter(year >= 2010, year <= 2023, !is.na(pm25)) %>%
+  group_by(iso3c) %>%
+  slice_max(year, n = 1, with_ties = FALSE) %>%
+  ungroup() %>%
+  select(iso3c, pm25)
+
+comb_pais <- panel %>%
+  filter(year >= 2010, year <= 2023, !is.na(comb_limpios)) %>%
+  group_by(iso3c) %>%
+  slice_max(year, n = 1, with_ties = FALSE) %>%
+  ungroup() %>%
+  select(iso3c, comb_limpios)
+
+# Unimos las tablas, que tienen una fila por país.
+corte <- paises %>%
+  left_join(rmm_pais, by = "iso3c") %>%
+  left_join(tmn_pais, by = "iso3c") %>%
+  left_join(tm5_pais, by = "iso3c") %>%
+  left_join(fecundidad_pais, by = "iso3c") %>%
+  left_join(pib_pais, by = "iso3c") %>%
+  left_join(partos_pais, by = "iso3c") %>%
+  left_join(pobreza_pais, by = "iso3c") %>%
+  left_join(pm25_pais, by = "iso3c") %>%
+  left_join(comb_pais, by = "iso3c")
+
+write_csv(corte, "OUTPUT/corte_ultimo_dato_por_pais.csv")
+
+# Contamos cuántos países tienen datos en cada variable.
+cobertura <- tibble(
+  variable = c("Mortalidad materna", "Mortalidad neonatal", "Mortalidad infantil",
+               "Fecundidad", "PIB per cápita", "Partos atendidos", "Pobreza extrema",
+               "Contaminación PM2.5", "Combustibles limpios para cocinar"),
+  paises_con_dato = c(sum(!is.na(corte$rmm)), sum(!is.na(corte$tmn)),
+                      sum(!is.na(corte$tm5)), sum(!is.na(corte$fecundidad)),
+                      sum(!is.na(corte$pib_pc_ppa)), sum(!is.na(corte$partos_cual)),
+                      sum(!is.na(corte$pobreza_ext)),
+                      sum(!is.na(corte$pm25)), sum(!is.na(corte$comb_limpios)))
+)
+
+kable(cobertura, caption = "Cobertura de datos: número de países con valor en cada variable")
+```
+
+## 4.5 Guardar y volver a importar la tabla en formato JSON
+
+Hasta ahora hemos importado archivos CSV. Otro formato muy habitual en los datos abiertos y en las API es **JSON**, que guarda cada fila como un objeto con pares *nombre: valor*. Para trabajar con él usamos el paquete `jsonlite`: `write_json()` exporta la tabla y `fromJSON()` la importa de nuevo.
+
+Exportamos la tabla final por país a JSON (con `na = "null"` los valores que faltan se escriben como `null`) y la leemos otra vez. A partir de aquí el análisis se hace con la tabla **leída desde el JSON**.
+
+```{r json}
+# 1) Exportamos la tabla por país a JSON
+write_json(corte, "OUTPUT/corte_ultimo_dato_por_pais.json",
+           pretty = TRUE, na = "null")
+
+# 2) La importamos de nuevo. Cada objeto del JSON pasa a ser una fila.
+corte_json <- fromJSON("OUTPUT/corte_ultimo_dato_por_pais.json") %>%
+  as_tibble()
+
+# 3) JSON no guarda factores, así que recuperamos el orden de los grupos de ingreso.
+corte_json <- corte_json %>%
+  mutate(grupo_ingreso = factor(grupo_ingreso, levels = levels(corte$grupo_ingreso)))
+
+# 4) Comprobamos que no se ha perdido nada: mismas filas y mismos datos.
+comprobacion <- tibble(
+  que_comprobamos = c("Número de filas", "Número de columnas",
+                      "Datos de mortalidad materna iguales"),
+  resultado = c(nrow(corte) == nrow(corte_json),
+                ncol(corte) == ncol(corte_json),
+                isTRUE(all.equal(corte$rmm, corte_json$rmm)))
+)
+kable(comprobacion, caption = "Comprobación de la importación desde JSON")
+
+# 5) Seguimos trabajando con la tabla leída desde el JSON.
+corte <- corte_json
+```
+
+# 5. Resultados
+
+## 5.1 Objetivo 1: ¿dónde se concentran las muertes?
+
+```{r mapas, fig.height=5}
+mapa_base <- gisco_get_countries(resolution = "20") %>%
+  filter(ISO3_CODE != "ATA")
+
+# Join entre el mapa (geometrías) y nuestros datos
+mapa <- mapa_base %>%
+  left_join(corte, by = c("ISO3_CODE" = "iso3c"))
+
+# Mapa de mortalidad materna
+ggplot(mapa) +
+  geom_sf(aes(fill = rmm), color = "white", linewidth = 0.1) +
+  scale_fill_viridis_b(option = "magma", direction = -1,
+                       breaks = c(10, 50, 100, 300, 500, 1000),
+                       na.value = "grey85",
+                       name = "Muertes por 100.000 nacidos vivos") +
+  labs(title = "Mortalidad materna por país",
+       caption = "Gris = sin dato. Fuente: Banco Mundial y Eurostat-GISCO.") +
+  theme_void() +
+  theme(legend.position = "bottom")
+
+# Mapa de mortalidad neonatal
+ggplot(mapa) +
+  geom_sf(aes(fill = tmn), color = "white", linewidth = 0.1) +
+  scale_fill_viridis_b(option = "magma", direction = -1,
+                       breaks = c(5, 10, 20, 30, 40),
+                       na.value = "grey85",
+                       name = "Muertes por 1.000 nacidos vivos") +
+  labs(title = "Mortalidad neonatal por país",
+       caption = "Gris = sin dato. Fuente: Banco Mundial y Eurostat-GISCO.") +
+  theme_void() +
+  theme(legend.position = "bottom")
+```
+
+Los 10 países con mayor mortalidad materna, y cómo se comparan algunos países de referencia:
+
+```{r tablas-paises}
+corte %>%
+  slice_max(order_by = rmm, n = 10, with_ties = FALSE) %>%
+  select(País = pais, `Grupo de ingreso` = grupo_ingreso,
+         `Mort. materna` = rmm, `Mort. neonatal` = tmn) %>%
+  kable(digits = 1, caption = "Top 10 de mortalidad materna (último dato disponible)")
+
+corte %>%
+  filter(iso3c %in% c("ESP", "USA", "MAR", "NGA", "NER", "TCD", "SOM", "SSD")) %>%
+  arrange(rmm) %>%
+  select(País = pais, `Mort. materna` = rmm, `Mort. neonatal` = tmn,
+         `Mort. < 5 años` = tm5, Fecundidad = fecundidad,
+         `% partos atendidos` = partos_cual, `PM2.5` = pm25) %>%
+  kable(digits = 1, caption = "Países de referencia")
+```
+
+## 5.2 Objetivo 2: ¿ha mejorado la situación y se han cerrado las diferencias?
+
+Calculamos la mediana de cada grupo de ingreso año a año (cada país cuenta igual, sin ponderar por población).
+
+```{r evolucion}
+evolucion <- panel %>%
+  filter(!is.na(grupo_ingreso), year >= 2000, year <= 2023) %>%
+  pivot_longer(c(rmm, tmn), names_to = "indicador", values_to = "valor") %>%
+  group_by(grupo_ingreso, indicador, year) %>%
+  summarise(mediana = median(valor, na.rm = TRUE), .groups = "drop") %>%
+  mutate(indicador = factor(indicador, levels = c("rmm", "tmn"),
+                            labels = c("Muertes maternas (por 100.000 nacidos vivos)",
+                                       "Muertes neonatales (por 1.000 nacidos vivos)")))
+
+ggplot(evolucion, aes(year, mediana, color = grupo_ingreso)) +
+  geom_line(linewidth = 1.1) +
+  facet_wrap(~ indicador, scales = "free_y") +
+  scale_color_manual(values = paleta, name = NULL) +
+  labs(x = NULL, y = "Mediana de los países del grupo",
+       title = "Evolución 2000-2023 según el nivel de ingreso del país") +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "bottom", plot.title = element_text(face = "bold"))
+```
+
+```{r cambio}
+cambio <- evolucion %>%
+  filter(year %in% c(2000, 2023)) %>%
+  pivot_wider(names_from = year, values_from = mediana, names_prefix = "a") %>%
+  mutate(`Reducción (%)` = round(100 * (a2000 - a2023) / a2000, 1)) %>%
+  rename(`Grupo de ingreso` = grupo_ingreso, Indicador = indicador,
+         `Año 2000` = a2000, `Año 2023` = a2023)
+
+kable(cambio, digits = 1, caption = "Cambio entre 2000 y 2023 (mediana por grupo)")
+```
+
+## 5.3 Objetivo 3: fecundidad y mortalidad
+
+Cada punto es un país (escala logarítmica en el eje vertical para que se vean bien todos). La línea negra es el ajuste lineal.
+
+```{r funcion-dispersion}
+dispersion <- function(datos, x, y, etiq_x, etiq_y, log_x = FALSE) {
+  d <- datos %>%
+    filter(!is.na(grupo_ingreso), !is.na(.data[[x]]), !is.na(.data[[y]]))
+  destacados <- d %>% filter(iso3c %in% c("ESP", "MAR", "NER", "USA"))
+
+  g <- ggplot(d, aes(.data[[x]], .data[[y]])) +
+    geom_point(aes(color = grupo_ingreso), alpha = 0.75, size = 2) +
+    geom_smooth(method = "lm", se = TRUE, color = "black", linewidth = 0.7) +
+    geom_text(data = destacados, aes(label = pais), vjust = -0.9,
+              size = 3.3, fontface = "bold") +
+    scale_color_manual(values = paleta, name = NULL) +
+    scale_y_log10() +
+    labs(x = etiq_x, y = etiq_y) +
+    theme_minimal(base_size = 12) +
+    theme(legend.position = "bottom")
+
+  if (log_x) g <- g + scale_x_log10(labels = label_number(big.mark = "."))
+  g
+}
+```
+
+```{r fecundidad}
+dispersion(corte, "fecundidad", "rmm",
+           "Hijos por mujer", "Muertes maternas por 100.000 nacidos vivos")
+
+dispersion(corte, "fecundidad", "tmn",
+           "Hijos por mujer", "Muertes neonatales por 1.000 nacidos vivos")
+```
+
+Para medir la fuerza de la relación usamos la **correlación de Spearman** (ρ). Va de -1 a 1: cerca de 1 significa "cuando una sube, la otra también", cerca de -1 significa "cuando una sube, la otra baja", y cerca de 0 significa "no hay relación". Usamos Spearman porque no exige que la relación sea una línea recta.
+
+```{r correlaciones}
+correl <- function(datos, x, y) {
+  d <- datos %>% select(all_of(c(x, y))) %>% drop_na()
+  ct <- cor.test(d[[x]], d[[y]], method = "spearman", exact = FALSE)
+  tibble(x = x, y = y, n_paises = nrow(d),
+         rho = unname(ct$estimate), p_valor = ct$p.value)
+}
+
+tabla_cor <- bind_rows(
+  correl(corte, "fecundidad",  "rmm"),
+  correl(corte, "fecundidad",  "tmn"),
+  correl(corte, "pib_pc_ppa",  "rmm"),
+  correl(corte, "pib_pc_ppa",  "tmn"),
+  correl(corte, "pobreza_ext", "rmm"),
+  correl(corte, "pobreza_ext", "tmn"),
+  correl(corte, "partos_cual", "rmm"),
+  correl(corte, "partos_cual", "tmn"),
+  correl(corte, "pm25",         "rmm"),
+  correl(corte, "pm25",         "tmn"),
+  correl(corte, "comb_limpios", "rmm"),
+  correl(corte, "comb_limpios", "tmn")
+)
+
+kable(tabla_cor, digits = 3,
+      caption = "Correlaciones de Spearman entre variables explicativas (x) y mortalidades (y)")
+
+rho_fec_rmm <- tabla_cor$rho[tabla_cor$x == "fecundidad" & tabla_cor$y == "rmm"]
+rho_fec_tmn <- tabla_cor$rho[tabla_cor$x == "fecundidad" & tabla_cor$y == "tmn"]
+rho_pib_tmn <- tabla_cor$rho[tabla_cor$x == "pib_pc_ppa" & tabla_cor$y == "tmn"]
+rho_par_rmm <- tabla_cor$rho[tabla_cor$x == "partos_cual" & tabla_cor$y == "rmm"]
+rho_pob_tmn <- tabla_cor$rho[tabla_cor$x == "pobreza_ext" & tabla_cor$y == "tmn"]
+rho_pm_tmn  <- tabla_cor$rho[tabla_cor$x == "pm25" & tabla_cor$y == "tmn"]
+rho_pm_rmm  <- tabla_cor$rho[tabla_cor$x == "pm25" & tabla_cor$y == "rmm"]
+rho_comb_tmn <- tabla_cor$rho[tabla_cor$x == "comb_limpios" & tabla_cor$y == "tmn"]
+rho_comb_rmm <- tabla_cor$rho[tabla_cor$x == "comb_limpios" & tabla_cor$y == "rmm"]
+
+# Pequeña función para escribir en el texto si la relación es positiva o negativa
+sentido <- function(r) ifelse(r > 0, "positiva", "negativa")
+```
+
+## 5.4 Objetivo 4 (a): pobreza, atención sanitaria y ambiente
+
+Usamos dos formas de medir la pobreza: la riqueza media del país (PIB per cápita) y el porcentaje de población en pobreza extrema.
+
+```{r pobreza-pib}
+dispersion(corte, "pib_pc_ppa", "tmn",
+           "PIB per cápita (dólares PPA, escala logarítmica)",
+           "Muertes neonatales por 1.000 nacidos vivos", log_x = TRUE)
+
+dispersion(corte, "pib_pc_ppa", "rmm",
+           "PIB per cápita (dólares PPA, escala logarítmica)",
+           "Muertes maternas por 100.000 nacidos vivos", log_x = TRUE)
+```
+
+Ahora agrupamos los países según qué porcentaje de su población vive en pobreza extrema y miramos la mortalidad de menores de 5 años.
+
+```{r pobreza-tramos}
+corte <- corte %>%
+  mutate(tramo_pobreza = cut(pobreza_ext, breaks = c(-Inf, 3, 10, 30, Inf),
+                             labels = c("hasta 3 %", "3-10 %", "10-30 %", "más del 30 %")))
+
+datos_box <- corte %>% filter(!is.na(tramo_pobreza), !is.na(tm5))
+
+n_por_tramo <- datos_box %>% count(tramo_pobreza)
+
+ggplot(datos_box, aes(tramo_pobreza, tm5)) +
+  geom_boxplot(fill = "#fdd49e", outlier.shape = NA) +
+  geom_jitter(aes(color = grupo_ingreso), width = 0.15, alpha = 0.7, size = 2) +
+  scale_color_manual(values = paleta, name = NULL) +
+  labs(x = "Población en pobreza extrema (% del país)",
+       y = "Muertes antes de los 5 años por 1.000 nacidos vivos",
+       title = "Cuanta más pobreza extrema, más muertes infantiles",
+       caption = "El nº de países de cada tramo aparece en la tabla inferior.") +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "bottom", plot.title = element_text(face = "bold"))
+
+kable(n_por_tramo, col.names = c("Tramo de pobreza extrema", "Nº de países"))
+```
+
+La atención cualificada en el parto es el posible **"puente"** entre pobreza y muerte: los países pobres tienen menos partos atendidos y eso eleva las muertes.
+
+```{r partos}
+dispersion(corte, "partos_cual", "rmm",
+           "% de partos atendidos por personal cualificado",
+           "Muertes maternas por 100.000 nacidos vivos")
+
+dispersion(corte, "partos_cual", "tmn",
+           "% de partos atendidos por personal cualificado",
+           "Muertes neonatales por 1.000 nacidos vivos")
+```
+
+### Contaminación del aire y mortalidad
+
+Incluimos ahora la **variable ambiental**. Usamos dos indicadores: la exposición media del país a partículas finas **PM2.5** (aire exterior) y el porcentaje de población que **cocina con combustibles limpios** (un indicador indirecto de la contaminación del aire dentro de las casas: quien cocina con leña o carbón respira más humo).
+
+```{r ambiente}
+dispersion(corte, "pm25", "tmn",
+           "PM2.5: exposición media anual (microgramos/m³, escala logarítmica)",
+           "Muertes neonatales por 1.000 nacidos vivos", log_x = TRUE)
+
+dispersion(corte, "comb_limpios", "tmn",
+           "% de población con combustibles limpios para cocinar",
+           "Muertes neonatales por 1.000 nacidos vivos")
+
+dispersion(corte, "comb_limpios", "rmm",
+           "% de población con combustibles limpios para cocinar",
+           "Muertes maternas por 100.000 nacidos vivos")
+```
+
+Los países con menos acceso a combustibles limpios suelen ser también los más pobres, así que parte de esta relación puede deberse a la pobreza y no solo al aire. Por eso, en el modelo siguiente incluimos el PM2.5 junto con el resto de variables.
+
+## 5.5 Objetivo 4 (b): ¿se mantiene la relación al controlar el resto?
+
+Una correlación entre dos variables puede deberse a una tercera. Para comprobarlo ajustamos un **modelo de regresión lineal** de la mortalidad (en logaritmo) con cuatro variables a la vez: riqueza, partos atendidos, fecundidad y contaminación del aire (PM2.5). Cada coeficiente mide el efecto de una variable **manteniendo las otras iguales**.
+
+Idea con un ejemplo numérico: si el coeficiente del PIB (en logaritmo) fuese -0,30, duplicar el PIB per cápita multiplicaría la mortalidad por 2^(-0,30) = 0,81, es decir, la reduciría un 19 %.
+
+```{r modelo}
+modelo_tmn <- lm(log(tmn) ~ log(pib_pc_ppa) + partos_cual + fecundidad + log(pm25), data = corte)
+modelo_rmm <- lm(log(rmm) ~ log(pib_pc_ppa) + partos_cual + fecundidad + log(pm25), data = corte)
+
+tidy(modelo_tmn, conf.int = TRUE) %>%
+  kable(digits = 3, caption = "Modelo para log(mortalidad neonatal)")
+
+tidy(modelo_rmm, conf.int = TRUE) %>%
+  kable(digits = 3, caption = "Modelo para log(mortalidad materna)")
+
+glance(modelo_tmn) %>% select(r.squared, adj.r.squared, nobs) %>%
+  kable(digits = 3, caption = "Calidad del ajuste (neonatal)")
+glance(modelo_rmm) %>% select(r.squared, adj.r.squared, nobs) %>%
+  kable(digits = 3, caption = "Calidad del ajuste (materna)")
+
+coef_pib_tmn <- coef(modelo_tmn)["log(pib_pc_ppa)"]
+efecto_doble_pib <- 2^coef_pib_tmn
+efecto_doble_pm25 <- 2^coef(modelo_tmn)["log(pm25)"]
+```
+
+# 6. Conclusiones generales
+
+```{r medianas-conclusiones, include=FALSE}
+medianas <- corte %>%
+  filter(!is.na(grupo_ingreso)) %>%
+  group_by(grupo_ingreso) %>%
+  summarise(rmm = median(rmm, na.rm = TRUE), tmn = median(tmn, na.rm = TRUE), .groups = "drop")
+
+rmm_bajo <- medianas$rmm[medianas$grupo_ingreso == "Ingreso bajo"]
+rmm_alto <- medianas$rmm[medianas$grupo_ingreso == "Ingreso alto"]
+tmn_bajo <- medianas$tmn[medianas$grupo_ingreso == "Ingreso bajo"]
+tmn_alto <- medianas$tmn[medianas$grupo_ingreso == "Ingreso alto"]
+```
+
+1. **La geografía de la muerte materna y neonatal coincide con la de la pobreza.** La mediana de mortalidad materna en los países de ingreso bajo es de `r round(rmm_bajo)` muertes por 100.000 nacidos vivos, frente a `r round(rmm_alto)` en los de ingreso alto (unas `r round(rmm_bajo / rmm_alto)` veces más). En mortalidad neonatal, `r round(tmn_bajo, 1)` frente a `r round(tmn_alto, 1)` por 1.000 (unas `r round(tmn_bajo / tmn_alto, 1)` veces más).
+2. **Se ha mejorado, pero las diferencias se mantienen.** Todos los grupos de ingreso reducen su mortalidad entre 2000 y 2023, pero la distancia entre los países pobres y los ricos sigue siendo enorme (ver tabla de cambios).
+3. **Fecundidad y mortalidad van de la mano.** La correlación de Spearman de la fecundidad con la mortalidad materna es ρ = `r round(rho_fec_rmm, 2)` y con la neonatal ρ = `r round(rho_fec_tmn, 2)`. Es una asociación, no una prueba de causa: la relación puede funcionar en ambos sentidos y también depende de la pobreza y del acceso a anticoncepción y educación.
+4. **Pobreza y atención en el parto son las variables que más pesan.** El PIB per cápita se asocia de forma negativa con la mortalidad neonatal (ρ = `r round(rho_pib_tmn, 2)`), igual que los partos atendidos con la mortalidad materna (ρ = `r round(rho_par_rmm, 2)`) y la pobreza extrema se asocia de forma positiva con la mortalidad neonatal (ρ = `r round(rho_pob_tmn, 2)`). En el modelo conjunto, duplicar el PIB per cápita se asocia con multiplicar la mortalidad neonatal por `r round(efecto_doble_pib, 2)`, a igualdad de partos atendidos, fecundidad y PM2.5.
+5. **El ambiente también se asocia, pero va muy ligado a la pobreza.** La relación de la contaminación PM2.5 con la mortalidad neonatal es `r sentido(rho_pm_tmn)` (ρ = `r round(rho_pm_tmn, 2)`) y con la materna `r sentido(rho_pm_rmm)` (ρ = `r round(rho_pm_rmm, 2)`). El acceso a combustibles limpios para cocinar tiene una relación `r sentido(rho_comb_tmn)` con la mortalidad neonatal (ρ = `r round(rho_comb_tmn, 2)`) y `r sentido(rho_comb_rmm)` con la materna (ρ = `r round(rho_comb_rmm, 2)`). En el modelo conjunto, duplicar el PM2.5 se asocia con multiplicar la mortalidad neonatal por `r round(efecto_doble_pm25, 2)`, a igualdad de las demás variables. Como los países con peor aire suelen ser también más pobres, no podemos separar del todo el efecto del ambiente del de la pobreza.
+6. **Ser un país rico no garantiza un parto seguro: el caso de EE. UU.** Estados Unidos tiene la mortalidad materna más alta entre los países de ingresos altos: unas 22 muertes por 100.000 nacidos vivos en 2022, más del doble que en la mayoría de ellos (Gunja et al., 2024), y 17,9 en 2024 según el CDC (Hoyert, 2026). Dentro del país, la tasa de las mujeres negras no hispanas (44,8) triplica la de las blancas no hispanas (14,2) (Hoyert, 2026), y se estima que más del 80 % de estas muertes eran evitables (Gunja et al., 2024). El informe señala qué falta allí frente a otros países ricos: es el único del estudio que no garantiza visitas a domicilio después del parto ni al menos 14 semanas de baja pagada, y cuenta con pocas matronas (Gunja et al., 2024). Este caso refuerza la idea central del trabajo: importa menos la riqueza media de un país que el apoyo y la atención que recibe cada mujer. Estas cifras proceden del CDC y del Commonwealth Fund, no de las estimaciones del Banco Mundial que usamos en los análisis, y no demuestran por sí solas la causa de esa diferencia.
+7. **Mensaje final.** Las muertes no dependen de cuántos hijos se tengan en abstracto, sino de si el parto ocurre con **personal cualificado, medicamentos y un hospital al que llegar**. Eso apunta a soluciones centradas en mejorar la atención sanitaria y garantizar el acceso voluntario a la planificación familiar, sin medidas coercitivas.
+
+## Limitaciones
+
+- **Datos por país, no por persona.** Los resultados describen países en promedio; no sirven para explicar casos individuales (falacia ecológica).
+- **Estimaciones, no recuentos.** En muchos países sin buen registro civil, las cifras son **estimaciones modelizadas** con incertidumbre (WHO et al., 2025).
+- **Correlación no es causalidad.** Pobreza, educación de las mujeres, conflictos y acceso a anticoncepción se mueven juntos y no los hemos podido separar del todo.
+- **Ambiente medido de forma gruesa.** El PM2.5 es la exposición media de todo el país, no la de cada mujer embarazada, y el acceso a combustibles limpios mide el aire de casa solo de forma indirecta.
+- **Variables relacionadas entre sí.** PIB, partos atendidos, fecundidad y contaminación están muy conectadas (multicolinealidad), lo que hace menos estables los coeficientes del modelo.
+- **Cobertura desigual.** Pobreza extrema y partos atendidos faltan en bastantes países (sobre todo ricos y en algunos en conflicto); usamos el último dato disponible desde 2010 en estas variables (pobreza, partos atendidos, PM2.5 y combustibles limpios).
+- **Medianas sin ponderar.** Cada país cuenta igual, sea muy grande o muy pequeño.
+
+# 7. Referencias
+
+- Benatar, D. (2006). *Better never to have been: The harm of coming into existence*. Oxford University Press.
+- Cresswell, J. A., Alexander, M., Chong, M. Y. C., et al. (2025). Global and regional causes of maternal deaths 2009-20: a WHO systematic analysis. *The Lancet Global Health*. https://doi.org/10.1016/S2214-109X(24)00560-6
+- Eurostat. (s. f.). *GISCO: Geographic Information System of the Commission*. https://ec.europa.eu/eurostat/web/gisco
+- Gunja, M. Z., Gumas, E. D., Masitha, R., & Zephyrin, L. C. (2024). *Insights into the U.S. maternal mortality crisis: An international comparison*. Commonwealth Fund. https://doi.org/10.26099/cthn-st75
+- Hoyert, D. L. (2026). Maternal mortality rates in the United States, 2024. *NCHS Health E-Stats, 113*. National Center for Health Statistics. https://dx.doi.org/10.15620/cdc/174651
+- United Nations Inter-agency Group for Child Mortality Estimation. (2026). *Levels & trends in child mortality*. UNICEF.
+- World Bank. (s. f.). *World Development Indicators*. https://data.worldbank.org/
+- World Health Organization. (2024). *Household air pollution* [Hoja informativa]. https://www.who.int/news-room/fact-sheets/detail/household-air-pollution-and-health
+- World Health Organization. (2025). *Maternal mortality* [Hoja informativa]. https://www.who.int/news-room/fact-sheets/detail/maternal-mortality
+- World Health Organization, UNICEF, UNFPA, World Bank Group y United Nations Population Division. (2025). *Trends in maternal mortality 2000 to 2023*. WHO.
